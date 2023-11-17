@@ -8,7 +8,7 @@ ENV KC_METRICS_ENABLED=true
 ENV KC_DB=postgres
 
 # Add keycloak-gsis-providers
-ADD --chown=keycloak:keycloak https://github.com/cti-nts/keycloak-gsis-providers/releases/download/v2.0.0/keycloak-gsis-providers-java-17-v2.0.0.jar /opt/keycloak/providers/keycloak-gsis-providers-java-17-v2.0.0.jar
+ADD --chown=keycloak:keycloak https://github.com/cti-nts/keycloak-gsis-providers/releases/download/v3.0.0/keycloak-gsis-providers-3.0.0.jar /opt/keycloak/providers/keycloak-gsis-providers-3.0.0.jar
 
 WORKDIR /opt/keycloak
 
