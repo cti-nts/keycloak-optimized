@@ -1,4 +1,7 @@
-FROM quay.io/keycloak/keycloak:22.0 as builder
+ARG KEYCLOAK_VERSION=19.0.2
+ARG GSIS_PROVIDERS_VERSION=2.0.0
+
+FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as builder
 
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -8,13 +11,15 @@ ENV KC_METRICS_ENABLED=true
 ENV KC_DB=postgres
 
 # Add keycloak-gsis-providers
-ADD --chown=keycloak:keycloak https://github.com/cti-nts/keycloak-gsis-providers/releases/download/v3.0.0/keycloak-gsis-providers-3.0.0.jar /opt/keycloak/providers/keycloak-gsis-providers-3.0.0.jar
+ARG GSIS_PROVIDERS_VERSION
+ADD --chown=keycloak:keycloak https://github.com/cti-nts/keycloak-gsis-providers/releases/download/v${GSIS_PROVIDERS_VERSION}/keycloak-gsis-providers-java-11-v${GSIS_PROVIDERS_VERSION}.jar /opt/keycloak/providers/keycloak-gsis-providers-${GSIS_PROVIDERS_VERSION}.jar
 
 WORKDIR /opt/keycloak
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:19.0.2
+ARG KEYCLOAK_VERSION
+FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # change these values to point to a running postgres instance
