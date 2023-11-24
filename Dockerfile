@@ -14,7 +14,7 @@ WORKDIR /opt/keycloak
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:22.0
+FROM quay.io/keycloak/keycloak:19.0.2
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # change these values to point to a running postgres instance
